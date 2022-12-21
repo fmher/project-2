@@ -35,5 +35,53 @@ router.post('/', async (req, res) => {
     }
 })
 
+// GET /users/login -- render a login form that POSTs to /users/login
+router.get('/login', (req, res) => {
+    // res.send('show login form')
+    res.render('users/login.ejs', {
+        message: req.query.message ? req.query.message : null
+    })
+})
+
+// POST /users/login -- ingest data from form rendered @ GET /users/login
+router.post('/login', async (req, res) => {
+    // res.send('check user crendentials against db')
+    try {
+        // look up the user based on their email
+        const user = await db.user.findOne({
+            where: {
+                email: req.body.email
+            }
+        })
+        // boilerplate message if login fails
+        const badCredentialMessage = 'username or password incorrectt'
+        if(!user) {
+            // if user isnt found in db
+            res.redirect('/users/login?=message=' + badCredentialMessage)
+        } else if (user.password !== req.body.password ) {
+            // id users supplied password is incorrect
+            res.redirect('/users/login?message=' + badCredentialMessage)
+        } else {
+            // if user is found and their password matched log them in
+            console.log('logged user in!')
+            res.cookie('userId', user.id)
+            res.redirect('/')
+        }
+        // if the user isnt found in the db
+        // if users supplied password is incorrect
+        // if the user is found and their password matches log them in
+    } catch(err) {
+        console.log(err)
+        res.status(500).send('server error!')
+    }
+})
+
+// GET /users/logout -- clear ant cookes and redirect to the homepage
+router.get('/logout', (req, res) => {
+    // res.send('log the user out by clearing the cookie')
+    res.clearCookie('userId')
+    res.redirect('/')
+})
+
 // export the router
 module.exports = router
