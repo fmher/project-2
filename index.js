@@ -6,6 +6,9 @@ const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 8000
 app.set('view engine', 'ejs')
+// parse request bodies from html forms
+// makes that req.body work returns content, if not here req.body returns blank
+app.use(express.urlencoded({ extended: false }))
 
 // routes and controllers
 app.get('/', (req, res) => {
@@ -13,6 +16,8 @@ app.get('/', (req, res) => {
     // res.send('lets get started')
     res.render('home.ejs')
 })
+
+app.use('/users', require('./controllers/users'))
 
 // listen on a port
 app.listen(PORT, () => {
