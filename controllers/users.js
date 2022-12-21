@@ -7,7 +7,9 @@ const router = express.Router()
 
 // GET /users/new -- server a form to create a new user
 router.get('/new', (req, res) => {
-    res.render('users/new.ejs')
+    res.render('users/new.ejs', {
+        user: res.locals.user
+    })
 })
 
 // POST /users -- create a new user from the form @ /users/new
@@ -27,7 +29,7 @@ router.post('/', async (req, res) => {
         // log the user in (store the user's id as as a cookie in the browser)
         res.cookie('userID', newUser.id)
         // redirect to the homepage (for now)
-        res.redirect('/')
+        res.redirect('/users/profile')
 
     } catch(err) {
         console.log(err)
@@ -39,7 +41,8 @@ router.post('/', async (req, res) => {
 router.get('/login', (req, res) => {
     // res.send('show login form')
     res.render('users/login.ejs', {
-        message: req.query.message ? req.query.message : null
+        message: req.query.message ? req.query.message : null,
+        user: res.locals.user
     })
 })
 
@@ -64,8 +67,8 @@ router.post('/login', async (req, res) => {
         } else {
             // if user is found and their password matched log them in
             console.log('logged user in!')
-            res.cookie('userId', user.id)
-            res.redirect('/')
+            res.cookie('userId', user.id) // userId = user.id
+            res.redirect('/users/profile')
         }
         // if the user isnt found in the db
         // if users supplied password is incorrect
@@ -81,6 +84,18 @@ router.get('/logout', (req, res) => {
     // res.send('log the user out by clearing the cookie')
     res.clearCookie('userId')
     res.redirect('/')
+})
+
+// GET /users/profile -- show the user their profile page
+router.get('/profile', (req, res) => {
+    // if user not logged in -- not allowed to be here
+    if (!res.locals.user) {
+        res.redirect('users/login?message=You must authenticate before you are authorized to view this resourse!')
+    } else {
+        res.render('users/profile.ejs', {
+            user: res.locals.user
+        })
+    }
 })
 
 // export the router
