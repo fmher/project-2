@@ -13,6 +13,9 @@ People who like pokemon casusally or competitively would come join this blog to 
 
 ## ERD
 
+![erd](https://user-images.githubusercontent.com/115588595/209241947-6bb121e6-b49b-4d79-81b5-d2ac4da087d1.png)
+
+
 ## Restful charting
 
 ## WireFrames
