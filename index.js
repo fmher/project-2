@@ -4,6 +4,7 @@ const express = require('express')
 // middelware like urluncoded
 const cookieParser = require('cookie-parser')
 const db = require('./models')
+const crypto = require('crypto-js')
 
 // app config
 const app = express()
@@ -18,36 +19,39 @@ app.use(cookieParser()) // returns a function
 // custom auth middleware that checks the cookies for a user id
 // if found, look up the user in db
 //tell all downstream routes about this user
-app.use( async (req, res, next) => {
+app.use(async (req, res, next) => {
     try {
         if (req.cookies.userId) {
-            // user is logged in, lets find them in the db
-            const user = await db.user.findByPk(req.cookies.userId)
-            //mount the logged in user on the res.locals
-            res.locals.user = user // have to do it on top, allows everthing after to have access to user
+            // decrypt the user id and turn it into a string
+            const decryptedId = crypto.AES.decrypt(req.cookies.userId, process.env.SECRET)
+            const decryptedString = decryptedId.toString(crypto.enc.Utf8)
+            // the user is logged in, lets find them in the db
+            const user = await db.user.findByPk(decryptedString)
+            // mount the logged in user on the res.locals
+            res.locals.user = user
         } else {
             // set the logged in user to be null for conditional rendering
             res.locals.user = null
         }
 
-        // move on the next middleware
+        // move on the the next middleware/route
         next()
-
     } catch (err) {
-        console.log('error in auth middleware: 🔥🔥🔥', err)
-        next() // goes to the next things, continues running from my understanding
-
+        console.log('error in auth middleware: 🔥🔥🔥🔥', err)
+        // explicity set user to null if there is an error
+        res.locals.user = null
+        next() // go to the next thing
     }
 })
 
 // example custom middleware (incoming request logger)
 app.use((req, res, next) => {
     // our code goes here
-    // console.log('hello from the inside of the middleware!')
+    // console.log('hello from inside of the middleware!')
     console.log(`incoming request: ${req.method} - ${req.url}`)
     // res.locals are a place that we can put data to share with 'downstream routes'
     // res.locals.myData = 'hello I am data'
-    //invoke next to express to go to the next route or middle
+    // invoke next to tell express to go to the next route or middle
     next()
 })
 
