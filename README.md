@@ -18,6 +18,19 @@ People who like pokemon casusally or competitively would come join this blog to 
 
 ## Restful charting
 
+| VERB        | URL      | CRUD     |  RESPONSE  | 
+|:-----------:|:--------:|:--------:|:----------:|
+| get         | /        | read     | homepage   |
+| get         | /users   | read     | user hompage |
+| post        | /users/new | create | new user hompage |
+| post        | /users/commits | create | writes a post on homepage |
+| get         | /users/commits/edit | read | edits comments/post |
+| get         | /users/:id | read   | shows current/edited comments |
+| get         | /users/pokemon | read | show all pokemon |
+| post        | /users/pokemon/commits | create | comment on the selected pokemon |
+| put         | /users/:id && /users/pokemon/:id | update | update all comments on user page and pokemon page |
+| destroy     | /users/:id && /users/pokemon/:id | destroy | delete selected comment on user or pokemon page | 
+
 ## WireFrames
 
 ## MVP
