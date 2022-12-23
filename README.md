@@ -33,6 +33,9 @@ People who like pokemon casusally or competitively would come join this blog to 
 
 ## WireFrames
 
+![IMG_9330](https://user-images.githubusercontent.com/115588595/209245793-904b2d8b-88bf-4054-819c-fe30cf370c55.jpg)
+
+
 ## MVP
 
 - Login, sign up, and sign out works correctly
