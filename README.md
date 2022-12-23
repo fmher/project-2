@@ -13,7 +13,7 @@ People who like pokemon casusally or competitively would come join this blog to 
 
 ## ERD
 
-![erd](https://user-images.githubusercontent.com/115588595/209241947-6bb121e6-b49b-4d79-81b5-d2ac4da087d1.png)
+
 
 
 ## Restful charting
@@ -28,8 +28,8 @@ People who like pokemon casusally or competitively would come join this blog to 
 | get         | /users/:id | read   | shows current/edited comments |
 | get         | /users/pokemon | read | show all pokemon |
 | post        | /users/pokemon/commits | create | comment on the selected pokemon |
-| put         | /users/:id && /users/pokemon/:id | update | update all comments on user page and pokemon page |
-| destroy     | /users/:id && /users/pokemon/:id | destroy | delete selected comment on user or pokemon page | 
+| put         | /pokemon/:id | update | update all comments on user page and pokemon page |
+| destroy     | /pokemon/:id | destroy | delete selected comment on user or pokemon page | 
 
 ## WireFrames
 
