@@ -13,6 +13,7 @@ People who like pokemon casusally or competitively would come join this blog to 
 
 ## ERD
 
+![erd-v2](https://user-images.githubusercontent.com/115588595/209248112-e70152c6-e4d8-4459-89b3-78f6f3d5dfec.png)
 
 
 
