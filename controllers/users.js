@@ -120,5 +120,16 @@ router.get('/profile', (req, res) => {
     }
 })
 
+
+router.get('/pokemonList', (req, res) => {
+    if (!res.locals.user) {
+        res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
+    } else {
+        res.render('users/pokemonList.ejs', {
+            user: res.locals.user
+        })
+    }
+})
+
 // export the router
 module.exports = router
