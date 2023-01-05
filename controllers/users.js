@@ -4,6 +4,7 @@ const db = require('../models')
 const router = express.Router()
 const crypto = require('crypto-js')
 const bcrypt = require('bcrypt')
+const axios = require('axios')
 
 // mount our routes on the router
 
@@ -125,8 +126,11 @@ router.get('/pokemonList', (req, res) => {
     if (!res.locals.user) {
         res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
     } else {
+        
+        
         res.render('users/pokemonList.ejs', {
-            user: res.locals.user
+            user: res.locals.user, 
+            
         })
     }
 })

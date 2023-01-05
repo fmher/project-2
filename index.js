@@ -6,6 +6,9 @@ const cookieParser = require('cookie-parser')
 const db = require('./models')
 const crypto = require('crypto-js')
 
+//for api
+const axios = require('axios')
+
 // app config
 const app = express()
 const PORT = process.env.PORT || 8000
@@ -60,9 +63,21 @@ app.get('/', (req, res) => {
     // res.send('<h1>just getting started!</h1>')
     // res.send('lets get started')
     // console.log('🔥🔥🔥🔥this is me', res.locals.user)
-    res.render('home.ejs', {
-        user: res.locals.user
+
+    let pokemonUrl = 'http://pokeapi.co/api/v2/pokemon/'
+
+    axios.get(pokemonUrl).then(respond => {
+
+        let pokemon = respond.data.results
+
+        res.render('home.ejs', {
+            user: res.locals.user,
+            pokemon: pokemon
+
+        })
+
     })
+
 })
 
 app.use('/users', require('./controllers/users'))
