@@ -32,15 +32,19 @@ router.post('/', async (req, res) => {
             console.log('user exists!')
             res.redirect('/users/login?message=Please log in to continue.')
         } else {
+
+
+
+
+
             // here we know its a new user
             // hash the supplied password
             const hashedPassword = bcrypt.hashSync(req.body.password, 12)
 
-            //maybe this it??? -------- turns out this was it, cause i needed to call it to save it
-            // was being saved on newuser.save()
+            // saves username
             newUser.username = req.body.username
 
-            console.log('🔥🔥',newUser.email)
+           
 
             // save the user with the new password
             newUser.password = hashedPassword
@@ -127,11 +131,15 @@ router.get('/pokemonList', (req, res) => {
         res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
     } else {
         
-        
-        res.render('users/pokemonList.ejs', {
-            user: res.locals.user, 
-            
+        let pokemonUrl = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=890"
+        axios.get(pokemonUrl).then(respond => {
+            let pkmn = respond.data.results
+            res.render('users/pokemonList.ejs', {
+                pokemon: pkmn,
+                user: res.locals.user, 
+            })
         })
+
     }
 })
 

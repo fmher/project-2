@@ -1,7 +1,13 @@
 <%- include('../partials/header.ejs', { user }) %> 
 
-<h3>going to be a list of pokemon</h3>
+<h3>list of pokemon 1 to 890, up to gen 8, sword and sheild</h3>
 
+
+<% pokemon.forEach((pokemons, i) => { %>
+    
+    <ol><%= i +1 %> - <%= pokemons.name %> </ol>
+
+<% }) %>
 
 
 <%- include('../partials/footer.ejs') %> 

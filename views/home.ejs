@@ -2,6 +2,10 @@
 <%- include('partials/header.ejs', { user, pokemon }) %>   
 
 <h2>HOME PAGE!</h2>
+<% if(user) { %>
+    <h2>hello <%= user.username %></h2>
+<% } %>
+
 
 
 

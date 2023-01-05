@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
     // res.send('lets get started')
     // console.log('🔥🔥🔥🔥this is me', res.locals.user)
 
-    let pokemonUrl = 'http://pokeapi.co/api/v2/pokemon/'
+    let pokemonUrl = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=890"
 
     axios.get(pokemonUrl).then(respond => {
 
@@ -79,6 +79,21 @@ app.get('/', (req, res) => {
     })
 
 })
+
+
+
+//allow pokemonList.ejs to have acces to API 
+// app.get('/users/', (req, res) => {
+//     //shows all pokemon from 1 to 890, goes to eternatus
+//     let pokemonUrl = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=890"
+//     axios.get(pokemonUrl).then(respond => {
+//         let pkmn = respond.data.results
+//         res.render('pokemonList.ejs', {
+//             pokemon: pkmn
+//         })
+//     })
+// })
+
 
 app.use('/users', require('./controllers/users'))
 
