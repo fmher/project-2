@@ -1,6 +1,4 @@
-
-
-sequelize model:create 
+auth_boilerplate - name of dt TABLE
 
 USER - USERPOKEMON - POKEMON - COMMENT - N:M 
 
@@ -13,7 +11,7 @@ password: string
 USERPOKEMON
 -------------
 userId: integer
-pkmnId: integer
+pokemonId: integer
 
 POKEMON
 ---------
@@ -23,11 +21,22 @@ userId: integer
 COMMENT
 ---------
 userId: integer
-pkmnId: integer
+pokemonId: integer
 content: string -------- idk if needed
 
-JOIN TABLE MODELS NAMES CAN BE PLURALIZED
-
+DONE--------------------
 sequelize model:create --name user --attributes email:string,username:string,password:string
 
-auth_boilerplate
+
+JOIN TABLE MODELS NAMES CAN BE PLURALIZED
+FK NEEDS TO BE CAMALCASED
+DONE-------------------------
+sequelize model:create --name userPokemons --attributes userId:integer,pokemonId:integer
+
+
+DONE-------------------------
+sequelize model:create --name pokemon --attributes pokemonName:string
+
+
+DONE-------------------------
+sequelize model:create --name comment --attributes userId:integer,pokemonId:integer,content:text
