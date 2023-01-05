@@ -1,1 +1,33 @@
-sequelize db:create 
+
+
+sequelize model:create 
+
+USER - USERPOKEMON - POKEMON - COMMENT - N:M 
+
+USER
+----------
+email: string
+username: string
+password: string 
+
+USERPOKEMON
+-------------
+userId: integer
+pkmnId: integer
+
+POKEMON
+---------
+pkmnName: string
+userId: integer
+
+COMMENT
+---------
+userId: integer
+pkmnId: integer
+content: string -------- idk if needed
+
+JOIN TABLE MODELS NAMES CAN BE PLURALIZED
+
+sequelize model:create --name user --attributes email:string,username:string,password:string
+
+auth_boilerplate
