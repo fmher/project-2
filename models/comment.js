@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      models.comment.belongsToMany(models.pokemon, {through: 'userpokemon'})
+      models.comment.belongsTo(models.pokemon)
 
-      models.comment.belongsToMany(models.user, {through: 'userpokemon'})
+      models.comment.belongsTo(models.user)
 
     }
   }

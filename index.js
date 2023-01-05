@@ -59,7 +59,7 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     // res.send('<h1>just getting started!</h1>')
     // res.send('lets get started')
-    console.log('🔥🔥🔥🔥this is me', res.locals.user)
+    // console.log('🔥🔥🔥🔥this is me', res.locals.user)
     res.render('home.ejs', {
         user: res.locals.user
     })

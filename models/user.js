@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.user.belongsToMany(models.pokemon, {through: 'userpokemons'})
 
-      // not sure if belongsto or belongstomany
-      models.user.belongsTo(models.comment)
+      
+      models.user.hasMany(models.comment)
 
     }
   }
