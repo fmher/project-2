@@ -12,8 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
+
+      //not join table, why belongs to
       models.comment.belongsTo(models.pokemon)
 
+      //not join table, why belongs to
       models.comment.belongsTo(models.user)
 
     }
