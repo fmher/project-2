@@ -20,7 +20,10 @@ router.post('/', async (req, res) => {
         // based on the info in the req.body, find or create user
         const [newUser, created] = await db.user.findOrCreate({
             where: {
-                email: req.body.email
+                
+                email: req.body.email,
+                username: req.body.username
+
             }
         }) 
         // if the user is found, redirect user to login
@@ -31,6 +34,13 @@ router.post('/', async (req, res) => {
             // here we know its a new user
             // hash the supplied password
             const hashedPassword = bcrypt.hashSync(req.body.password, 12)
+
+            //maybe this it??? -------- turns out this was it, cause i needed to call it to save it
+            // was being saved on newuser.save()
+            newUser.username = req.body.username
+
+            console.log('🔥🔥',newUser.email)
+
             // save the user with the new password
             newUser.password = hashedPassword
             await newUser.save() // actually save the new password in th db
