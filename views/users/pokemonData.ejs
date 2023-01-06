@@ -1,6 +1,7 @@
 <%- include('../partials/header.ejs', { user, pokemon }) %> 
 
 <h2> <%= pokemon.name %> </h2>
+<img src="<%= pokemon.sprites.front_default %>" alt="<%= pokemon.name %>">
 
 <!-- allowed me to touch typing -->
 <!-- <h2> < pokemon.types[0].type.name %> </h2>
@@ -16,6 +17,5 @@
 <% } %>
 
 
-<img src="<%= pokemon.sprites.front_default %>" alt="<%= pokemon.name %>">
 
 <%- include('../partials/footer.ejs') %> 

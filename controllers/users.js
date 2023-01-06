@@ -145,9 +145,9 @@ router.get('/pokemonList', (req, res) => {
 })
 
 
-router.get('/pokemonList/:name', async (req, res) => {
+router.get('/pokemonList/:idx', async (req, res) => {
     try {
-        const pokemonName = req.params.name
+        const pokemonName = req.params.idx
         const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
         const pokemonsData = await axios.get(apiUrl)
         res.render('users/pokemonData.ejs', {pokemon: pokemonsData.data})
