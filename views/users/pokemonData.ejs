@@ -1,7 +1,21 @@
 <%- include('../partials/header.ejs', { user, pokemon }) %> 
 
 <h2> <%= pokemon.name %> </h2>
-<h2> <%= pokemon.types %> </h2>
+
+<!-- allowed me to touch typing -->
+<!-- <h2> < pokemon.types[0].type.name %> </h2>
+<h2> <= pokemon.types[1].type.name %> </h2>
+<h2> %= pokemon.types.length %> </h2> -->
+
+<!-- if has only one type displays one, if more then display 2 -->
+<% if (pokemon.types.length === 2) { %>
+    <h2> <%= pokemon.types[0].type.name %> </h2>
+    <h2> <%= pokemon.types[1].type.name %> </h2>
+<% } else { %>
+    <h2> <%= pokemon.types[0].type.name %> </h2>
+<% } %>
+
+
 <img src="<%= pokemon.sprites.front_default %>" alt="<%= pokemon.name %>">
 
 <%- include('../partials/footer.ejs') %> 
