@@ -126,6 +126,7 @@ router.get('/profile', (req, res) => {
 })
 
 
+//allow pokemonList.ejs to have acces to API 
 router.get('/pokemonList', (req, res) => {
     if (!res.locals.user) {
         res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
@@ -142,6 +143,20 @@ router.get('/pokemonList', (req, res) => {
 
     }
 })
+
+
+router.get('/pokemonList/:name', async (req, res) => {
+    try {
+        const pokemonName = req.params.name
+        const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
+        const pokemonsData = await axios.get(apiUrl)
+        res.render('users/pokemonData.ejs', {pokemon: pokemonsData.data})
+
+    } catch (err) {
+        console.error(err)
+    }
+})
+
 
 // export the router
 module.exports = router

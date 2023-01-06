@@ -44,7 +44,7 @@ People who like pokemon casusally or competitively would come join this blog to 
 - Be able to edit comments
 - make css/styling look decent
 - make sure app works
-- Be able to add pokemons from all the way up to pokemon ultra sun and moon
+- Be able to add pokemons from all the way up to pokemon sword and shield
 - create page where you can view all pokemon in order
 - Be able to favorite & unfavorite pokemon
 - Add up to 6 pokemon to your personal/home page
