@@ -114,16 +114,58 @@ router.get('/logout', (req, res) => {
 })
 
 // GET /users/profile -- show the user their profile page
-router.get('/profile', (req, res) => {
+router.get('/profile', async (req, res) => {
     // if the user is not logged in -- they are not allowed to be here
     if (!res.locals.user) {
         res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
     } else {
-        res.render('users/profile.ejs', {
-            user: res.locals.user
+
+        // res.render('users/profile.ejs', {
+        //     user: res.locals.user
+        // })
+
+        let pokemonUrl = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=890"
+        axios.get(pokemonUrl).then(respond => {
+            let pkmn = respond.data.results
+
+            try {
+                // const currentFav = await db.
+                            
+
+                res.render('users/profile.ejs', {
+                    pokemon: pkmn,
+                    user: res.locals.user, 
+                })
+
+            } catch (error) {
+
+            }
+
+
         })
+
     }
 })
+
+// receive data from fav button being clicked
+router.post('/profile', async (req, res) => {
+    
+    try {
+
+        const newfav = await db.pokemon.findOrCreate({
+            where: {
+                name: req.body.name
+            }
+        })
+
+    } catch (error) {
+        console.error(error)
+    }
+
+})
+
+
+
 
 
 //allow pokemonList.ejs to have acces to API 
@@ -146,15 +188,25 @@ router.get('/pokemonList', (req, res) => {
 
 
 router.get('/pokemonList/:idx', async (req, res) => {
-    try {
-        const pokemonName = req.params.idx
-        const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
-        const pokemonsData = await axios.get(apiUrl)
-        res.render('users/pokemonData.ejs', {pokemon: pokemonsData.data})
-
-    } catch (err) {
-        console.error(err)
+    
+    if (!res.locals.user) {
+        res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
+    } else {
+        
+        try {
+            const pokemonName = req.params.idx
+            const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
+            const pokemonsData = await axios.get(apiUrl)
+            res.render('users/pokemonData.ejs', {
+                pokemon: pokemonsData.data
+            })
+    
+        } catch (err) {
+            console.error(err)
+        }
+        
     }
+
 })
 
 

@@ -1,11 +1,29 @@
 <!-- user: user === user, shorthand -->
 <%- include('partials/header.ejs', { user, pokemon }) %>   
 
+
+
 <h2>HOME PAGE!</h2>
 <% if(user) { %>
     <h2>hello <%= user.username %></h2>
+
+    
+
 <% } %>
 
+
+
+<% if (!user) {%>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/890.png" alt="pokemon">
+    <!-- will get back to it later -->
+    <img src="https://pokeapi.co/api/v2/pokemon/<%= Math.floor( Math.random() * 890) %> .png" alt="pokemon">
+    
+
+    <button><a href="/users/new">Sign Up</a></button>
+    <button><a href="/users/login">Login</a></button>
+    
+
+<% } %>
 
 
 
