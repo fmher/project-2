@@ -4,7 +4,7 @@
 <h2> <%= pokemon.name %> </h2>
 <img src="<%= pokemon.sprites.front_default %>" alt="<%= pokemon.name %>">
 
-<form method="post" action="/users/profile.ejs">
+<form method="post" action="/users/profile">
     <input hidden type="text" name="name" value="<%= pokemon.name %>">
     <!-- type submit sends data over to user -->
     <button class="btn" type="submit">Favorite me!</button>

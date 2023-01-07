@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      models.pokemon.belongsToMany(models.user, {through: 'userpokemon'})
+      models.pokemon.belongsToMany(models.user, {through: 'userPokemons'})
 
       //hasmany because it hasmany comments. 
       // 1:m relationship

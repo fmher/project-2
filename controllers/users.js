@@ -146,11 +146,11 @@ router.post('/profile', async (req, res) => {
 
         const newfav = await db.pokemon.findOrCreate({
             where: {
-                PokemonName: req.body.name
+                pokemonName: req.body.name
             }
         })
 
-        res.redirect('users/profile.ejs')
+        res.redirect('/users/profile')
 
     } catch (error) {
         console.error(error)
