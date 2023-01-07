@@ -115,6 +115,7 @@ router.get('/logout', (req, res) => {
 
 // GET /users/profile -- show the user their profile page
 router.get('/profile', async (req, res) => {
+    
     // if the user is not logged in -- they are not allowed to be here
     if (!res.locals.user) {
         res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
@@ -122,6 +123,11 @@ router.get('/profile', async (req, res) => {
 
 
         try {
+
+            // const currentUser = await db.user
+
+
+
                 
             const currentFav = await db.pokemon.findAll()
 
