@@ -70,7 +70,7 @@ app.get('/', (req, res) => {
 
         let pokemon = respond.data.results
 
-        res.render('home.ejs', {
+        res.render(('home.ejs'), {
             user: res.locals.user,
             pokemon: pokemon
 

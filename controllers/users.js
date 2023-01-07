@@ -120,29 +120,21 @@ router.get('/profile', async (req, res) => {
         res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
     } else {
 
-        // res.render('users/profile.ejs', {
-        //     user: res.locals.user
-        // })
 
-        let pokemonUrl = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=890"
-        axios.get(pokemonUrl).then(respond => {
-            let pkmn = respond.data.results
+        try {
+                
+            const currentFav = await db.pokemon.findAll()
 
-            try {
-                // const currentFav = await db.
-                            
+            res.render('users/profile.ejs', {
+                user: res.locals.user,
+                favPokemons: currentFav 
+            })
 
-                res.render('users/profile.ejs', {
-                    pokemon: pkmn,
-                    user: res.locals.user, 
-                })
-
-            } catch (error) {
-
-            }
+         } catch (error) {
+            console.error(error)
+        }
 
 
-        })
 
     }
 })
@@ -154,9 +146,11 @@ router.post('/profile', async (req, res) => {
 
         const newfav = await db.pokemon.findOrCreate({
             where: {
-                name: req.body.name
+                PokemonName: req.body.name
             }
         })
+
+        res.redirect('users/profile.ejs')
 
     } catch (error) {
         console.error(error)

@@ -4,17 +4,12 @@
 <h2> <%= pokemon.name %> </h2>
 <img src="<%= pokemon.sprites.front_default %>" alt="<%= pokemon.name %>">
 
-<form method="post" action="/users/favorites">
+<form method="post" action="/users/profile.ejs">
     <input hidden type="text" name="name" value="<%= pokemon.name %>">
     <!-- type submit sends data over to user -->
     <button class="btn" type="submit">Favorite me!</button>
 </form>
 
-
-<!-- allowed me to touch typing -->
-<!-- <h2> < pokemon.types[0].type.name %> </h2>
-<h2> <= pokemon.types[1].type.name %> </h2>
-<h2> %= pokemon.types.length %> </h2> -->
 
 <!-- if has only one type displays one, if more then display 2 -->
 <% if (pokemon.types.length === 2) { %>
