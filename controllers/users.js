@@ -5,6 +5,7 @@ const router = express.Router()
 const crypto = require('crypto-js')
 const bcrypt = require('bcrypt')
 const axios = require('axios')
+const pokemon = require('../models/pokemon')
 
 // mount our routes on the router
 
@@ -124,17 +125,21 @@ router.get('/profile', async (req, res) => {
 
         try {
 
-            // const currentUser = await db.user
+            const currentUser = await db.user.findByPk(res.locals.user.id)
+            
+            const currentFav = await currentUser.getPokemons()
 
-
-
-                
-            const currentFav = await db.pokemon.findAll()
-
+           
+            
             res.render('users/profile.ejs', {
                 user: res.locals.user,
-                favPokemons: currentFav 
+                favPokemons: currentFav,
+                userId: res.locals.user.id 
             })
+
+
+
+            res.send(currentFav)
 
          } catch (error) {
             console.error(error)
@@ -152,9 +157,12 @@ router.post('/profile', async (req, res) => {
 
         const newfav = await db.pokemon.findOrCreate({
             where: {
-                pokemonName: req.body.name
+                pokemonName: req.body.name,
+                userId: res.locals.user.id
             }
         })
+
+        await userId.addPokemon(pokemon)
 
         res.redirect('/users/profile')
 

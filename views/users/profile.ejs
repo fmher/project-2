@@ -1,8 +1,13 @@
-<%- include('../partials/header.ejs', { user, favPokemons }) %> 
+<%- include('../partials/header.ejs', { user, favPokemons, userId }) %> 
 
 
 
 <h3>Hey, <%= user.username %> thanks for logging into the app!</h3>
+
+<h1><%= user.id %> users id number</h1>
+
+
+
 
 <% favPokemons.forEach(pokemons => { %>
     <h2> <%= pokemons.pokemonName %> </h2>
@@ -10,3 +15,5 @@
 
 
 <%- include('../partials/footer.ejs') %> 
+
+

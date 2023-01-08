@@ -8,6 +8,7 @@ const crypto = require('crypto-js')
 
 //for api
 const axios = require('axios')
+const userpokemons = require('./models/userpokemons')
 
 // app config
 const app = express()
@@ -73,14 +74,32 @@ app.get('/', (req, res) => {
         res.render(('home.ejs'), {
             user: res.locals.user,
             pokemon: pokemon
-
+            
         })
 
     })
 
 })
 
+// app.get('/users/profile', async (req, res) => {
 
+//     try {
+
+//         const userProfile = await db.pokemon.findAll({
+//             where: {
+//                 userId: req.params.id 
+//             },
+//             include: [db.pokemon]
+//         })
+    
+//         const pokemons = await userpokemons.getPokemons()
+//         res.json(userpokemons)
+//     } catch (error) {
+//         console.error(error)
+//     }
+
+
+// })
 
 
 
