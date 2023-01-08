@@ -129,6 +129,14 @@ router.get('/profile', async (req, res) => {
             
             const currentFav = await currentUser.getPokemons()
 
+
+            // const currentFav = await db.pokemon.findAll()
+            
+            // res.render('users/profile.ejs', {
+            //     user: res.locals.user,
+            //     favPokemons: currentFav,
+            //     userId: res.locals.user.id 
+            // })
            
             
             res.render('users/profile.ejs', {
@@ -138,8 +146,7 @@ router.get('/profile', async (req, res) => {
             })
 
 
-
-            res.send(currentFav)
+            // res.send(currentFav)
 
          } catch (error) {
             console.error(error)
@@ -153,18 +160,35 @@ router.get('/profile', async (req, res) => {
 // receive data from fav button being clicked
 router.post('/profile', async (req, res) => {
     
+
+
     try {
 
-        const newfav = await db.pokemon.findOrCreate({
-            where: {
-                pokemonName: req.body.name,
-                userId: res.locals.user.id
-            }
-        })
 
-        await userId.addPokemon(pokemon)
+        if(res.locals.user) {
 
-        res.redirect('/users/profile')
+         
+            const currentUser = await db.user.findByPk(res.locals.user.id)
+    
+            const [newfav, created] = await db.pokemon.findOrCreate({
+                where: {
+                    pokemonName: req.body.name
+                    
+                }
+    
+    
+            })
+    
+            await currentUser.addPokemon(newfav)
+    
+            res.redirect('/users/profile')
+
+        } else {
+            res.redirect('/')
+        }
+
+
+        // res.send(newfav)
 
     } catch (error) {
         console.error(error)
