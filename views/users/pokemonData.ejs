@@ -1,4 +1,4 @@
-<%- include('../partials/header.ejs', { user, pokemon }) %> 
+<%- include('../partials/header.ejs', { user, pokemon, pokemonComments }) %> 
 
 <h1><%= user.id %> users id number</h1>
 
@@ -22,6 +22,20 @@
 <% } else { %>
     <h2> <%= pokemon.types[0].type.name %> </h2>
 <% } %>
+
+
+<div>
+    <br>
+    <h1>pokemon comments!</h1>
+    <% pokemonComments.forEach(comments => { %>
+        
+        <% if(comments.userId === null && comments.pokemonId ) { %>
+            <h3><%= comments.content  %></h3>
+        <% } %>
+        
+    <% }) %>
+
+</div>
 
 
 

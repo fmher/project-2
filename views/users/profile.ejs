@@ -17,7 +17,7 @@
 <form action="/users/profile" method="">
 
     <div class="form-group">
-        <label for="content">Content</label>
+        <label for="content">World Chat</label> <br>
         <textarea id="content" type="text" placeholder="Enter Your Comment..." name="content" required ></textarea>
       </div>
 
@@ -25,10 +25,18 @@
 
 </form>
 
+
+<h3><%= userComments.userId %></h3>
+
+
 <div>
 
     <% userComments.forEach(comments => { %>
-        <h3><%= comments.content %></h3>
+        
+        <% if(comments.userId && comments.pokemonId === null) { %>
+            <h3><%= comments.content  %></h3>
+        <% } %>
+
     <% }) %>
 
 </div>

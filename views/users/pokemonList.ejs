@@ -1,4 +1,4 @@
-<%- include('../partials/header.ejs', { user, pokemon }) %> 
+<%- include('../partials/header.ejs', { user, pokemon, pokemonComments }) %> 
 
 <h3>list of pokemon 1 to 890, up to gen 8, sword and sheild</h3>
 
@@ -7,7 +7,6 @@
 <% pokemon.forEach((pokemons, i) => { %>
     <ol><%= i +1 %> - <a href="/users/pokemonList/<%= pokemons.name%>"><%= pokemons.name %></a> </ol>
 <% }) %>
-
 
 
 

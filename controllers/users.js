@@ -160,15 +160,11 @@ router.get('/profile', async (req, res) => {
             // finds all users
             // console.log('🔥🔥🔥🔥', allUsers)
             // res.send(currentFav)
-            // console.log('🔥🔥🔥🔥', userComments)
-
-
+            console.log('🔥🔥🔥🔥', userComments)
 
          } catch (error) {
             console.error(error)
         }
-
-
 
     }
 })
@@ -194,25 +190,11 @@ router.post('/profile', async (req, res) => {
     
             await currentUser.addPokemon(newfav)
 
-
-            // const commented = await db.comment.findall()
-            // const [newComment, created2] = await db.comment.create({
-            //     where: {
-            //         content: req.body,
-            //         userId: res.locals.user.id
-            //         // pokemonId: res.locals.user.id
-            //     }
-            // })
-            
-    
             res.redirect('/users/profile')
 
         } else {
             res.redirect('/')
         }
-
-
-        
 
     } catch (error) {
         console.error(error)
@@ -225,19 +207,34 @@ router.post('/profile', async (req, res) => {
 
 
 //allow pokemonList.ejs to have acces to API 
-router.get('/pokemonList', (req, res) => {
+router.get('/pokemonList', async (req, res) => {
     if (!res.locals.user) {
         res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
     } else {
         
-        let pokemonUrl = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=890"
-        axios.get(pokemonUrl).then(respond => {
-            let pkmn = respond.data.results
-            res.render('users/pokemonList.ejs', {
-                pokemon: pkmn,
-                user: res.locals.user, 
+        try {
+
+            let pokemonUrl = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=890"
+    
+            const pokemonComments = await db.comment.findAll()
+    
+            axios.get(pokemonUrl).then(respond => {
+
+                let pkmn = respond.data.results
+                res.render('users/pokemonList.ejs', {
+                    pokemon: pkmn,
+                    user: res.locals.user,
+                    pokemonComments: pokemonComments 
+                })
+
+                // console.log('🔥🔥🔥🔥', pokemonComments)
             })
-        })
+
+
+        } catch (error) {
+            console.error(error)
+        }
+
 
     }
 })
@@ -253,8 +250,12 @@ router.get('/pokemonList/:idx', async (req, res) => {
             const pokemonName = req.params.idx
             const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
             const pokemonsData = await axios.get(apiUrl)
+
+            const pokemonComments = await db.comment.findAll()
+
             res.render('users/pokemonData.ejs', {
-                pokemon: pokemonsData.data
+                pokemon: pokemonsData.data,
+                pokemonComments: pokemonComments
             })
     
         } catch (err) {
