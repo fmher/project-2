@@ -10,7 +10,7 @@
 
 
 <% favPokemons.forEach(pokemons => { %>
-    <h2> <%= pokemons.pokemonName %> </h2>
+    <h2> <a href="/users/pokemonList/<%= pokemons.pokemonName %>"> <%= pokemons.pokemonName %> </a> </h2>
 <% }) %>
 
 
