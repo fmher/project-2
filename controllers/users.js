@@ -134,7 +134,7 @@ router.get('/profile', async (req, res) => {
             const userComments = await db.comment.findAll()
 
             res.render('users/profile.ejs', {
-                user: res.locals.user,
+                user: currentUser,
                 favPokemons: currentFav,
                 userId: res.locals.user.id,
                 allUsers: allUsers,
@@ -144,7 +144,7 @@ router.get('/profile', async (req, res) => {
             // finds all users
             // console.log('🔥🔥🔥🔥', allUsers)
             // res.send(currentFav)
-            console.log('🔥🔥🔥🔥', currentUser)
+            // console.log('🔥🔥🔥🔥 allUsers -', allUsers)
 
          } catch (error) {
             console.error(error)
@@ -154,7 +154,7 @@ router.get('/profile', async (req, res) => {
 })
 
 // receive data from fav button being clicked
-router.post('/:idx', async (req, res) => {
+router.post('/profile', async (req, res) => {
     
     try {
 

@@ -27,7 +27,6 @@
 </form>
 
 
-<h3><%= userComments.userId %></h3>
 
 
 <div>
@@ -35,7 +34,8 @@
     <% userComments.forEach(comments => { %>
         
         <% if(comments.userId && comments.pokemonId === null) { %>
-            <h3><%= comments.content  %></h3>
+            <!-- finds which user said what -->
+            <h3><%= allUsers[comments.userId - 1].username  %> --- <%= comments.content  %></h3>
         <% } %>
 
     <% }) %>
