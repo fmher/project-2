@@ -129,6 +129,10 @@ router.get('/profile', async (req, res) => {
             
             const currentFav = await currentUser.getPokemons()
 
+            const allUsers = await db.user.findAll()
+
+            const userComments = await db.comment.findAll()
+
             // const currentFav = await db.pokemon.findAll()
             
             // res.render('users/profile.ejs', {
@@ -136,16 +140,29 @@ router.get('/profile', async (req, res) => {
             //     favPokemons: currentFav,
             //     userId: res.locals.user.id 
             // })
-           
             
+            // db.user.findAll({
+            //     where: { id: allUsers},
+            //     include: [db.comment]
+            // }).then(user => {
+
+            // })
+
+
             res.render('users/profile.ejs', {
                 user: res.locals.user,
                 favPokemons: currentFav,
-                userId: res.locals.user.id 
+                userId: res.locals.user.id,
+                allUsers: allUsers,
+                userComments: userComments
             })
-
-
+            
+            // finds all users
+            // console.log('🔥🔥🔥🔥', allUsers)
             // res.send(currentFav)
+            // console.log('🔥🔥🔥🔥', userComments)
+
+
 
          } catch (error) {
             console.error(error)
@@ -159,8 +176,6 @@ router.get('/profile', async (req, res) => {
 // receive data from fav button being clicked
 router.post('/profile', async (req, res) => {
     
-
-
     try {
 
 
@@ -180,15 +195,15 @@ router.post('/profile', async (req, res) => {
             await currentUser.addPokemon(newfav)
 
 
-            const [newComment, created2] = await db.comment.create({
-                where: {
-                    content: req.body,
-                    userId: res.locals.user.id
-                }
-            })
-            await currentUser.createComment(newComment)  
-
-            console.log('🔥🔥🔥🔥', newComment)
+            // const commented = await db.comment.findall()
+            // const [newComment, created2] = await db.comment.create({
+            //     where: {
+            //         content: req.body,
+            //         userId: res.locals.user.id
+            //         // pokemonId: res.locals.user.id
+            //     }
+            // })
+            
     
             res.redirect('/users/profile')
 
@@ -197,7 +212,7 @@ router.post('/profile', async (req, res) => {
         }
 
 
-        res.send('🔥🔥🔥🔥🔥', newComment)
+        
 
     } catch (error) {
         console.error(error)

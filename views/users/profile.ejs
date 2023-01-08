@@ -1,4 +1,4 @@
-<%- include('../partials/header.ejs', { user, favPokemons, userId }) %> 
+<%- include('../partials/header.ejs', { user, favPokemons, userId, allUsers, userComments }) %> 
 
 
 
@@ -27,7 +27,9 @@
 
 <div>
 
-    
+    <% userComments.forEach(comments => { %>
+        <h3><%= comments.content %></h3>
+    <% }) %>
 
 </div>
 
