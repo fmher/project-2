@@ -180,14 +180,15 @@ router.post('/profile', async (req, res) => {
             await currentUser.addPokemon(newfav)
 
 
-            // const newComment = await db.comment.create({
-            //     where: {
-            //         content: req.body.content
-            //     }
-            // })
-            // await currentUser.createComment(req.body.content)  
+            const [newComment, created2] = await db.comment.create({
+                where: {
+                    content: req.body,
+                    userId: res.locals.user.id
+                }
+            })
+            await currentUser.createComment(newComment)  
 
-
+            console.log('🔥🔥🔥🔥', newComment)
     
             res.redirect('/users/profile')
 
@@ -196,7 +197,7 @@ router.post('/profile', async (req, res) => {
         }
 
 
-        res.send(newComment)
+        res.send('🔥🔥🔥🔥🔥', newComment)
 
     } catch (error) {
         console.error(error)
