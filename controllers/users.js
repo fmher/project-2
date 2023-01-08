@@ -133,22 +133,6 @@ router.get('/profile', async (req, res) => {
 
             const userComments = await db.comment.findAll()
 
-            // const currentFav = await db.pokemon.findAll()
-            
-            // res.render('users/profile.ejs', {
-            //     user: res.locals.user,
-            //     favPokemons: currentFav,
-            //     userId: res.locals.user.id 
-            // })
-            
-            // db.user.findAll({
-            //     where: { id: allUsers},
-            //     include: [db.comment]
-            // }).then(user => {
-
-            // })
-
-
             res.render('users/profile.ejs', {
                 user: res.locals.user,
                 favPokemons: currentFav,
@@ -160,7 +144,7 @@ router.get('/profile', async (req, res) => {
             // finds all users
             // console.log('🔥🔥🔥🔥', allUsers)
             // res.send(currentFav)
-            console.log('🔥🔥🔥🔥', userComments)
+            console.log('🔥🔥🔥🔥', currentUser)
 
          } catch (error) {
             console.error(error)
@@ -170,7 +154,7 @@ router.get('/profile', async (req, res) => {
 })
 
 // receive data from fav button being clicked
-router.post('/profile', async (req, res) => {
+router.post('/:idx', async (req, res) => {
     
     try {
 
@@ -185,10 +169,22 @@ router.post('/profile', async (req, res) => {
                     pokemonName: req.body.name
                     
                 }
-    
             })
+            // console.log('🔥🔥🔥🔥', currentUser)
+
+
+            // const [worldChat,created2] = await db.comment.create({
+            //     where: {
+            //         userId: res.locals.user.id,
+            // // req.body.content from name='content'
+            //         content: req.body
+            //     }
+            // })
     
+
             await currentUser.addPokemon(newfav)
+
+            // await currentUser.createComment(worldChat)
 
             res.redirect('/users/profile')
 

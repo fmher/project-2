@@ -4,7 +4,7 @@
 
 <h3>Hey, <%= user.username %> thanks for logging into the app!</h3>
 
-<h1><%= user.id %>= IS THE users id number</h1>
+<h1><%= userId %>= IS THE users id number</h1>
 
 
 
@@ -14,7 +14,8 @@
 <% }) %>
 
 
-<form action="/users/profile" method="">
+<!-- post a new comment on world chat -->
+<form action="/users/profile" method="post">
 
     <div class="form-group">
         <label for="content">World Chat</label> <br>
