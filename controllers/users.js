@@ -129,7 +129,6 @@ router.get('/profile', async (req, res) => {
             
             const currentFav = await currentUser.getPokemons()
 
-
             // const currentFav = await db.pokemon.findAll()
             
             // res.render('users/profile.ejs', {
@@ -167,19 +166,28 @@ router.post('/profile', async (req, res) => {
 
         if(res.locals.user) {
 
-         
             const currentUser = await db.user.findByPk(res.locals.user.id)
     
+            // know that this part works!
             const [newfav, created] = await db.pokemon.findOrCreate({
                 where: {
                     pokemonName: req.body.name
                     
                 }
     
-    
             })
     
             await currentUser.addPokemon(newfav)
+
+
+            // const newComment = await db.comment.create({
+            //     where: {
+            //         content: req.body.content
+            //     }
+            // })
+            // await currentUser.createComment(req.body.content)  
+
+
     
             res.redirect('/users/profile')
 
@@ -188,7 +196,7 @@ router.post('/profile', async (req, res) => {
         }
 
 
-        // res.send(newfav)
+        res.send(newComment)
 
     } catch (error) {
         console.error(error)

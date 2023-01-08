@@ -4,7 +4,7 @@
 
 <h3>Hey, <%= user.username %> thanks for logging into the app!</h3>
 
-<h1><%= user.id %> users id number</h1>
+<h1><%= user.id %>= IS THE users id number</h1>
 
 
 
@@ -12,6 +12,28 @@
 <% favPokemons.forEach(pokemons => { %>
     <h2> <%= pokemons.pokemonName %> </h2>
 <% }) %>
+
+
+<form action="/users/profile" method="">
+
+    <div class="form-group">
+        <label for="content">Content</label>
+        <textarea id="content" type="text" placeholder="Enter Your Comment..." name="content" required ></textarea>
+      </div>
+
+      <input type="submit" class="btn">
+
+</form>
+
+<div>
+
+    
+
+</div>
+
+
+
+
 
 
 <%- include('../partials/footer.ejs') %> 
