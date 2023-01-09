@@ -278,15 +278,16 @@ router.get('/pokemonList/:idx', async (req, res) => {
 
             const pokemonComments = await db.comment.findAll({
                 // orders from new to oldest
-                order: [['createdAt', 'DESC']]
+                order: [['createdAt', 'DESC']],
+                include: [db.user]
             })
-
-            const allUsers = await db.user.findAll()
+            console.log('--------', pokemonComments[0].user.dataValues.username)
+            // const allUsers = await db.user.findAll()
 
             res.render('users/pokemonData.ejs', {
                 pokemon: pokemonsData.data,
                 pokemonComments: pokemonComments,
-                allUsers: allUsers
+                // allUsers: allUsers
             })
     
         } catch (err) {
@@ -322,16 +323,27 @@ router.delete('/pokemonList/:idx', async (req, res) => {
 })
 
 
-// edit
+// edit --------
 router.put('/pokemonList/:idx', async (req, res) => {
 
     try {
+        const user = res.locals.user
         const pokemonName = req.params.idx
         const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
-        const pokemonsData = await axios.get(apiUrl)
 
-        const edit = await db.comment.findByPk(res.locals.user.id)
-        await edit.update({comment: `${req.body.editContent}`} )
+        // const edit = await db.comment.findOne(user.dataValues.id)
+        console.log('------------ ',req.body)
+        const x = await db.comment.update({
+            content: req.body.editContent
+            
+        }, {
+            where: {
+                
+                id: Number(req.body.commentId)
+            }
+        }
+        
+        )
 
         res.redirect(`/users/pokemonList/${pokemonName}`)
 

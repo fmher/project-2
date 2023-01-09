@@ -1,4 +1,4 @@
-<%- include('../partials/header.ejs', { user, pokemon, pokemonComments, allUsers }) %> 
+<%- include('../partials/header.ejs', { user}) %> 
 
 <h1><%= user.id %> users id number</h1>
 
@@ -49,17 +49,22 @@
             <!-- delete -->
             <form action="/users/pokemonList/<%= pokemon.name %>?_method=DELETE" method="post">
                 
-                <h3> <%= allUsers[comments.userId - 1].username  %> - <%= comments.content  %></h3>
-
+                <h3></h3>
+                <h3> <%= comments.user.dataValues.username  %> - <%= comments.content  %></h3>
 
                 <input hidden type="text" name="content" value="<%= comments.content %>">
                 <button type="submit" value="delete" id="delete" >delete</button>
             </form>
 
+
             <!-- ?_method=PUT to edit -->
             <!-- edit -->
             <form action="/users/pokemonList/<%= pokemon.name %>?_method=PUT" method="post">
-                <input type="text" name="editContent" value="<%= comments.content %>">
+                <input  type="text" name="editContent" value="<%= comments.content  %>">
+                <input hidden type="number" name="userId" value="<%= comments.user.id %>" >
+                
+                <input hidden type="number" name="commentId" value="<%= comments.id %>" >
+
                 <button type="submit" value="edit" id="edit" >edit</button>
             </form>
 

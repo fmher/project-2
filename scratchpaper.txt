@@ -25,7 +25,7 @@ pokemonId: integer
 content: string -------- idk if needed
 
 DONE--------------------
-sequelize model:create --name user --attributes email:string,username:string,password:string
+sequelize model:create --name user --attributes email:string,username:string,password:string,commentId:integer
 
 
 JOIN TABLE MODELS NAMES CAN BE PLURALIZED
