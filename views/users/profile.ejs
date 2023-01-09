@@ -15,7 +15,7 @@
         <form action="/users/profile?_method=DELETE" method="post">
             <h2> <a href="/users/pokemonList/<%= pokemons.pokemonName %>"> <%= pokemons.pokemonName %> </a> </h2>
             <input hidden type="text" name="content" value="<%= pokemons.id %>">
-            <input type="submit" value="delete" id="delete">
+            <input type="submit" value="delete" id="delete" placeholder="unfavorite">
         </form>
 
     </div>
