@@ -6,6 +6,7 @@ const crypto = require('crypto-js')
 const bcrypt = require('bcrypt')
 const axios = require('axios')
 const pokemon = require('../models/pokemon')
+const { escapeXML } = require('ejs')
 
 // mount our routes on the router
 
@@ -130,8 +131,10 @@ router.get('/profile', async (req, res) => {
             const currentFav = await currentUser.getPokemons()
 
             const allUsers = await db.user.findAll()
+            // const allPkmn = allUsers.getPokemons()
 
             const userComments = await db.comment.findAll()
+            
 
             res.render('users/profile.ejs', {
                 user: currentUser,
@@ -144,7 +147,7 @@ router.get('/profile', async (req, res) => {
             // finds all users
             // console.log('🔥🔥🔥🔥', allUsers)
             // res.send(currentFav)
-            // console.log('🔥🔥🔥🔥 allUsers -', allUsers)
+            // console.log('🔥🔥🔥🔥 pkmn -', )
 
          } catch (error) {
             console.error(error)
@@ -158,10 +161,10 @@ router.post('/profile', async (req, res) => {
     
     try {
 
-
         if(res.locals.user) {
 
             const currentUser = await db.user.findByPk(res.locals.user.id)
+            
     
             // know that this part works!
             const [newfav, created] = await db.pokemon.findOrCreate({
@@ -172,19 +175,15 @@ router.post('/profile', async (req, res) => {
             })
             // console.log('🔥🔥🔥🔥', currentUser)
 
+            // const worldChat = await db.comment.create({
 
-            // const [worldChat,created2] = await db.comment.create({
-            //     where: {
-            //         userId: res.locals.user.id,
-            // // req.body.content from name='content'
-            //         content: req.body
-            //     }
+            //     userId: res.locals.user.id,
+            //     content: req.body.comment,
+            //     pokemonId: null
+
             // })
-    
 
             await currentUser.addPokemon(newfav)
-
-            // await currentUser.createComment(worldChat)
 
             res.redirect('/users/profile')
 
@@ -196,6 +195,30 @@ router.post('/profile', async (req, res) => {
         console.error(error)
     }
 
+})
+
+router.post('/profile/:idx', async (req, res) => {
+    try {
+
+        if(res.locals.user) {
+
+            const worldChat = await db.comment.create({
+
+                userId: res.locals.user.id,
+                content: req.body.comment,
+                pokemonId: null
+
+            })
+
+            res.redirect('/users/profile')
+
+        } else {
+            res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
+        }
+
+    } catch (error) {
+        console.error(error)
+    }
 })
 
 
@@ -249,15 +272,48 @@ router.get('/pokemonList/:idx', async (req, res) => {
 
             const pokemonComments = await db.comment.findAll()
 
+            const allUsers = await db.user.findAll()
+
             res.render('users/pokemonData.ejs', {
                 pokemon: pokemonsData.data,
-                pokemonComments: pokemonComments
+                pokemonComments: pokemonComments,
+                allUsers: allUsers
             })
     
         } catch (err) {
             console.error(err)
         }
         
+    }
+
+})
+
+router.post('/pokemonList/:idx', async (req, res) => {
+
+    if (!res.locals.user) {
+        res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
+    } else {
+        
+        try {
+
+            const pokemonName = req.params.idx
+            const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
+            const pokemonsData = await axios.get(apiUrl)
+
+            const allUsers = await db.user.findAll()
+
+            const pokemonComment = await db.comment.create({
+                
+                userId: res.locals.user.id,
+                pokemonId: pokemonsData.data.id,
+                content: req.body.comment
+                
+            })
+            
+            res.redirect(`/users/pokemonList/${pokemonName}`)
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 })

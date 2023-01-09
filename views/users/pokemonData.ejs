@@ -1,4 +1,4 @@
-<%- include('../partials/header.ejs', { user, pokemon, pokemonComments }) %> 
+<%- include('../partials/header.ejs', { user, pokemon, pokemonComments, allUsers }) %> 
 
 <h1><%= user.id %> users id number</h1>
 
@@ -24,13 +24,29 @@
 <% } %>
 
 
+<!-- submiting new comments -->
+<form action="/users/pokemonList/<%= pokemon.name %>" method="post">
+
+    <div class="form-group">
+        <label for="content">Pokemon comments</label> <br>
+        <input id="<%= user.id %>" type="text" placeholder="Enter Your Comment..." name="comment"  required />
+      </div>
+
+      <input type="submit" class="btn">
+
+</form>
+
+
+
+
+
 <div>
     <br>
     <h1>pokemon comments!</h1>
     <% pokemonComments.forEach(comments => { %>
         
-        <% if(comments.userId === null && comments.pokemonId ) { %>
-            <h3><%= comments.content  %></h3>
+        <% if(comments.userId && comments.pokemonId === pokemon.id ) { %>
+            <h3> <%= allUsers[comments.userId - 1].username  %> - <%= comments.content  %></h3>
         <% } %>
         
     <% }) %>
