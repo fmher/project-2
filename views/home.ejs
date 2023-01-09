@@ -1,13 +1,23 @@
 <!-- user: user === user, shorthand -->
 <%- include('partials/header.ejs', { user, pokemon }) %>   
 
+<style type="text/css">
+    body { background-color: #D8D8D8;color: #444;}
+    .container { text-align: center;}
+    .text { background-color: white;  text-align: center;}
+
+</style>
+
 
 
 <h2>HOME PAGE!</h2>
 <% if(user) { %>
-    <h2>hello <%= user.username %></h2>
-
+    <div class="container">
+        <h2 class="text">Hello User, <%= user.username %></h2>
     
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="pokemon" width="300px" height="300px">
+
+    </div>
 
 <% } %>
 

@@ -270,8 +270,6 @@ router.get('/pokemonList/:idx', async (req, res) => {
         
         try {
 
-        
-
             const pokemonName = req.params.idx
             const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
             const pokemonsData = await axios.get(apiUrl)
@@ -301,7 +299,7 @@ router.get('/pokemonList/:idx', async (req, res) => {
 router.delete('/pokemonList/:idx', async (req, res) => {
 
     try {
-        console.log('----------', req.body)
+        // console.log('----------', req.body)
         const pokemonName = req.params.idx
         const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
         const pokemonsData = await axios.get(apiUrl)
