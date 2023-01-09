@@ -10,7 +10,14 @@
 
 
 <% favPokemons.forEach(pokemons => { %>
-    <h2> <a href="/users/pokemonList/<%= pokemons.pokemonName %>"> <%= pokemons.pokemonName %> </a> </h2>
+    <div  style="background-color:#9dbad6">
+
+        <form action="/users/profile" method="delete">
+            <h2> <a href="/users/pokemonList/<%= pokemons.pokemonName %>"> <%= pokemons.pokemonName %> </a> </h2>
+            <input type="submit" value="Delete!">
+        </form>
+
+    </div>
 <% }) %>
 
 

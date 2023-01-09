@@ -35,18 +35,12 @@ router.post('/', async (req, res) => {
             res.redirect('/users/login?message=Please log in to continue.')
         } else {
 
-
-
-
-
             // here we know its a new user
             // hash the supplied password
             const hashedPassword = bcrypt.hashSync(req.body.password, 12)
 
             // saves username
             newUser.username = req.body.username
-
-           
 
             // save the user with the new password
             newUser.password = hashedPassword
@@ -66,6 +60,7 @@ router.post('/', async (req, res) => {
     }
 })
 
+
 // GET /users/login -- render a login form that POSTs to /users/login
 router.get('/login', (req, res) => {
     res.render('users/login.ejs', {
@@ -73,6 +68,7 @@ router.get('/login', (req, res) => {
         user: res.locals.user
     })
 })
+
 
 // POST /users/login -- ingest data from form rendered @ GET /users/login
 router.post('/login', async (req, res) => {
@@ -107,6 +103,7 @@ router.post('/login', async (req, res) => {
     }
 })
 
+
 // GET /users/logout -- clear any cookies and redirect to the homepage
 router.get('/logout', (req, res) => {
     // log the user out by removing the cookie
@@ -115,6 +112,7 @@ router.get('/logout', (req, res) => {
     res.redirect('/')
 })
 
+
 // GET /users/profile -- show the user their profile page
 router.get('/profile', async (req, res) => {
     
@@ -122,20 +120,14 @@ router.get('/profile', async (req, res) => {
     if (!res.locals.user) {
         res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
     } else {
-
-
         try {
 
             const currentUser = await db.user.findByPk(res.locals.user.id)
-            
             const currentFav = await currentUser.getPokemons()
-
             const allUsers = await db.user.findAll()
             // const allPkmn = allUsers.getPokemons()
-
             const userComments = await db.comment.findAll()
             
-
             res.render('users/profile.ejs', {
                 user: currentUser,
                 favPokemons: currentFav,
@@ -147,7 +139,7 @@ router.get('/profile', async (req, res) => {
             // finds all users
             // console.log('🔥🔥🔥🔥', allUsers)
             // res.send(currentFav)
-            // console.log('🔥🔥🔥🔥 pkmn -', )
+            // console.log('🔥🔥🔥🔥 currentFav -', currentFav)
 
          } catch (error) {
             console.error(error)
@@ -155,6 +147,7 @@ router.get('/profile', async (req, res) => {
 
     }
 })
+
 
 // receive data from fav button being clicked
 router.post('/profile', async (req, res) => {
@@ -165,7 +158,6 @@ router.post('/profile', async (req, res) => {
 
             const currentUser = await db.user.findByPk(res.locals.user.id)
             
-    
             // know that this part works!
             const [newfav, created] = await db.pokemon.findOrCreate({
                 where: {
@@ -173,15 +165,6 @@ router.post('/profile', async (req, res) => {
                     
                 }
             })
-            // console.log('🔥🔥🔥🔥', currentUser)
-
-            // const worldChat = await db.comment.create({
-
-            //     userId: res.locals.user.id,
-            //     content: req.body.comment,
-            //     pokemonId: null
-
-            // })
 
             await currentUser.addPokemon(newfav)
 
@@ -190,12 +173,11 @@ router.post('/profile', async (req, res) => {
         } else {
             res.redirect('/')
         }
-
     } catch (error) {
         console.error(error)
     }
-
 })
+
 
 router.post('/profile/:idx', async (req, res) => {
     try {
@@ -245,11 +227,7 @@ router.get('/pokemonList', async (req, res) => {
                     user: res.locals.user,
                     pokemonComments: pokemonComments 
                 })
-
-                // console.log('🔥🔥🔥🔥', pokemonComments)
             })
-
-
         } catch (error) {
             console.error(error)
         }
@@ -283,17 +261,16 @@ router.get('/pokemonList/:idx', async (req, res) => {
         } catch (err) {
             console.error(err)
         }
-        
     }
-
 })
+
 
 router.post('/pokemonList/:idx', async (req, res) => {
 
     if (!res.locals.user) {
         res.redirect('/users/login?message=You must authenticate before you are authorized to view this resource!')
     } else {
-        
+
         try {
 
             const pokemonName = req.params.idx
@@ -309,15 +286,31 @@ router.post('/pokemonList/:idx', async (req, res) => {
                 content: req.body.comment
                 
             })
-            
             res.redirect(`/users/pokemonList/${pokemonName}`)
         } catch (error) {
             console.error(error)
         }
     }
-
 })
 
+
+router.delete('/pokemonFavs', async (req, res) => {
+    try {
+
+        const currentUser = await db.user.findByPk(res.locals.user.id)
+        const currentFav = await currentUser.getPokemons()
+
+        const deleteCurrent = await db.userpokemons.destroy({
+            where: {
+                userId: user.locals.user.id,
+                pokemonId: req.params.commentId
+            }
+        })
+
+    } catch (error) {
+        console.error(error)
+    }
+})
 
 // export the router
 module.exports = router
