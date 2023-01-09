@@ -203,6 +203,28 @@ router.post('/profile/:idx', async (req, res) => {
     }
 })
 
+// delete favs
+router.delete('/profile', async (req, res) => {
+    try {
+        
+        const pokemonName = req.body.content
+        const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
+        const pokemonsData = await axios.get(apiUrl)
+        
+                // console.log('----------',pokemonsData.data.id)
+// userPokemons = db, spell error
+        const deleteFav = await db.userPokemons.destroy({
+            where: {
+                userId: res.locals.user.id,
+                pokemonId: pokemonsData.data.id
+            }
+        })
+        res.redirect('/users/profile')
+
+    } catch (error) {
+        console.error(error)
+    }
+})
 
 
 
@@ -254,7 +276,10 @@ router.get('/pokemonList/:idx', async (req, res) => {
             const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
             const pokemonsData = await axios.get(apiUrl)
 
-            const pokemonComments = await db.comment.findAll()
+            const pokemonComments = await db.comment.findAll({
+                // orders from new to oldest
+                order: [['createdAt', 'DESC']]
+            })
 
             const allUsers = await db.user.findAll()
 
@@ -271,7 +296,7 @@ router.get('/pokemonList/:idx', async (req, res) => {
 })
 
 
-// delete
+// delete comments
 router.delete('/pokemonList/:idx', async (req, res) => {
 
     try {

@@ -20,6 +20,7 @@ app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))    // returns a function
 // tell express to parse incoming cookies 
 app.use(cookieParser()) // returns a function 
+
 app.use(methodOverride('_method'))
 
 // custom auth middleware that checks the cookies for a user id
