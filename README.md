@@ -2,7 +2,7 @@
 
 https://project-pokemon-fanbase.herokuapp.com/
 
-## Project Idea
+## Pokemon Fandom
 
 I was thinking of creating a pokemon fan blog. You can favorite up to 6 pokemon on your profile and explain why you choose them. It can be why you like them or that you choose them because that team set up is broken. You can talk to people, write random status updates, view other peoples statuses, respond to statuses. Talk to other people who like pokemon as well. It will be like a little community. 
 
