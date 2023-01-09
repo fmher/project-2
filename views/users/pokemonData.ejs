@@ -37,8 +37,7 @@
 </form>
 
 
-
-
+<h3></h3>
 
 <div>
     <br>
@@ -46,7 +45,27 @@
     <% pokemonComments.forEach(comments => { %>
         
         <% if(comments.userId && comments.pokemonId === pokemon.id ) { %>
-            <h3> <%= allUsers[comments.userId - 1].username  %> - <%= comments.content  %></h3>
+<!-- delete -->
+
+            <form action="/users/pokemonList/<%= pokemon.name %>?_method=DELETE" method="post">
+                
+                <h3> <%= allUsers[comments.userId - 1].username  %> - <%= comments.content  %></h3>
+
+
+                <input hidden type="text" name="content" value="<%= comments.content %>">
+                <button type="submit" value="delete" id="delete" >delete</button>
+            </form>
+
+            <!-- ?_method=PUT to edit -->
+            <!-- edit -->
+            <form action="/users/pokemonList/<%= pokemon.name %>?_method=PUT" method="post">
+                <input type="text" name="editContent" value="<%= comments.content %>">
+                <button type="submit" value="edit" id="edit" >edit</button>
+            </form>
+
+
+
+
         <% } %>
         
     <% }) %>

@@ -237,6 +237,9 @@ router.get('/pokemonList', async (req, res) => {
 })
 
 
+
+
+
 router.get('/pokemonList/:idx', async (req, res) => {
     
     if (!res.locals.user) {
@@ -244,6 +247,9 @@ router.get('/pokemonList/:idx', async (req, res) => {
     } else {
         
         try {
+
+        
+
             const pokemonName = req.params.idx
             const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
             const pokemonsData = await axios.get(apiUrl)
@@ -265,6 +271,54 @@ router.get('/pokemonList/:idx', async (req, res) => {
 })
 
 
+// delete
+router.delete('/pokemonList/:idx', async (req, res) => {
+
+    try {
+        console.log('----------', req.body)
+        const pokemonName = req.params.idx
+        const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
+        const pokemonsData = await axios.get(apiUrl)
+        
+        const deleteComment = await db.comment.destroy({
+            where: {
+                userId: res.locals.user.id,
+                pokemonId: pokemonsData.data.id,
+                content: req.body.content
+            }
+        })
+        res.redirect(`/users/pokemonList/${pokemonName}`)
+        
+        // console.log('-------------', req.body.comment)
+        
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+
+// edit
+router.put('/pokemonList/:idx', async (req, res) => {
+
+    try {
+        const pokemonName = req.params.idx
+        const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
+        const pokemonsData = await axios.get(apiUrl)
+
+        const edit = await db.comment.findByPk(res.locals.user.id)
+        await edit.update({comment: `${req.body.editContent}`} )
+
+        res.redirect(`/users/pokemonList/${pokemonName}`)
+
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+
+
+
+
 router.post('/pokemonList/:idx', async (req, res) => {
 
     if (!res.locals.user) {
@@ -272,6 +326,7 @@ router.post('/pokemonList/:idx', async (req, res) => {
     } else {
 
         try {
+            
 
             const pokemonName = req.params.idx
             const apiUrl = `http://pokeapi.co/api/v2/pokemon/${pokemonName}/`
@@ -294,23 +349,7 @@ router.post('/pokemonList/:idx', async (req, res) => {
 })
 
 
-router.delete('/pokemonFavs', async (req, res) => {
-    try {
 
-        const currentUser = await db.user.findByPk(res.locals.user.id)
-        const currentFav = await currentUser.getPokemons()
-
-        const deleteCurrent = await db.userpokemons.destroy({
-            where: {
-                userId: user.locals.user.id,
-                pokemonId: req.params.commentId
-            }
-        })
-
-    } catch (error) {
-        console.error(error)
-    }
-})
 
 // export the router
 module.exports = router

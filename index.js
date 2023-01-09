@@ -5,6 +5,7 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const db = require('./models')
 const crypto = require('crypto-js')
+const methodOverride = require('method-override')
 
 //for api
 const axios = require('axios')
@@ -19,6 +20,7 @@ app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))    // returns a function
 // tell express to parse incoming cookies 
 app.use(cookieParser()) // returns a function 
+app.use(methodOverride('_method'))
 
 // custom auth middleware that checks the cookies for a user id
 // if found, look up the user in db
