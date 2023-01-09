@@ -69,7 +69,7 @@ People who like pokemon casusally or competitively would come join this blog to 
 - Be able to add pokemons from all the way up to pokemon sword and shield
 - create page where you can view all pokemon in order
 - Be able to favorite & unfavorite pokemon
-- Add up to 6 pokemon to your personal/home page
+- Add pokemon to your personal/home page
 
 ## stretch goals
 
@@ -78,6 +78,7 @@ People who like pokemon casusally or competitively would come join this blog to 
 - Add pokemon items to blog such as berries or equipment
 - add multiple pages for certain threads such as chatting page, pokemon page, compeitive page
 - make css/ styling look amazing
+- limit liked pokemon up to 6
 
 ## Post reflection 
 I was struggling quite a bit on this project. I got everything to work with a lot of help. If I didnt talk to people or google search I would of never figured how to create this project successfully. I think I should of worked on this project more on the break. That way my project would look completed. As of right now my project works but does not look great at all due to not having any styling down. After finishing this project I am more confident in my abilites because I have a better understanding of full stack development. Still, I would like to pracctice more so that I can get better at full stack development. That way, I can properly create another project and not have so may problems, getting stuck, or constantly seek for help. 
